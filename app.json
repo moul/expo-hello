@@ -1,14 +1,20 @@
 {
-  "name": "hello",
-  "displayName": "hello",
-  "expo": {
     "name": "hello",
-    "slug": "hello",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "description": "",
-    "githubUrl": "https://github.com/moul/expo-hello"
-  }
+    "displayName": "hello",
+    "expo": {
+        "name": "hello",
+        "slug": "hello",
+        "version": "1.0.0",
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+        "description": "initial app, based on official tutorial",
+        "githubUrl": "https://github.com/moul/expo-hello",
+        "icon": "./assets/icon.png",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#000000"
+        }
+    },
 }
