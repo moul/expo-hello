@@ -1,0 +1,9 @@
+[build]
+  command = "npm install -g expo-cli && expo build:web"
+  publish = "web-build"
+  #functions = "functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
