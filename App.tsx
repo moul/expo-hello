@@ -1,7 +1,7 @@
 import React from 'react';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, Icon, Button, Layout, Text, IconRegistry, Avatar } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as ImagePicker from 'expo-image-picker';
 import uploadToAnonymousFilesAsync from 'anonymous-files';
@@ -48,8 +48,6 @@ export default function App() {
   const HomeScreen = () => (
     <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text category='h1'>Welcome, Mec.</Text>
-
-      
       {selectedImage !== null ? <>
         <Avatar size='giant' shape='rounded' source={{uri: selectedImage.localUri}} />
         <Button accessoryLeft={IconWithName('share-outline')} onPress={openShareDialogAsync}>Share</Button>
