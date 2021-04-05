@@ -1,9 +1,11 @@
 import React from 'react';
-import { Image, StyleSheet, Text, Platform, TouchableOpacity, View } from 'react-native';
-import logo from './assets/logo.png';
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, Icon, Button, Layout, Text, IconRegistry, Avatar } from '@ui-kitten/components';
+import { StyleSheet } from 'react-native';
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as ImagePicker from 'expo-image-picker';
-import * as Sharing from 'expo-sharing';
 import uploadToAnonymousFilesAsync from 'anonymous-files';
+import * as Sharing from 'expo-sharing';
 
 export default function App() {
   const [selectedImage, setSelectedImage] = React.useState(null);
@@ -39,65 +41,40 @@ export default function App() {
     await Sharing.shareAsync(selectedImage.localUri);
   };
 
-  let Button = (props) => {
-    return (
-      <TouchableOpacity style={styles.button} onPress={props.onPress}>
-        <Text style={styles.buttonText}>{props.text}</Text>
-      </TouchableOpacity>
-    );
-  };
+  const IconWithName = (name, props) => (subProps) => (
+    <Icon name={name} {...subProps} {...props} />
+  );
 
-  if (selectedImage !== null) {
-    return (
-      <View style={styles.container}>
-        <Image
-          source={{ uri: selectedImage.localUri }}
-          style={styles.thumbnail}
-        />
-        <Button text='Share this photo' onPress={openShareDialogAsync} />
-        <Button text='Clear' onPress={clearImage} />
-      </View>
-    )
-  }
+  const HomeScreen = () => (
+    <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text category='h1'>Welcome, Mec.</Text>
+
+      
+      {selectedImage !== null ? <>
+        <Avatar size='giant' shape='rounded' source={{uri: selectedImage.localUri}} />
+        <Button accessoryLeft={IconWithName('share-outline')} onPress={openShareDialogAsync}>Share</Button>
+        <Button accessoryLeft={IconWithName('trash-2-outline')} onPress={clearImage}>Clear</Button>
+      </> : <>
+        <Button accessoryLeft={IconWithName('camera-outline')} onPress={openImagePickerAsync}>Upload a photo!</Button>
+      </>}
+    </Layout>
+  );
 
   return (
-    <View style={styles.container}>
-      <Image source={logo} style={styles.logo} />
-      <Text style={styles.instructions}>To share a photo from your phone with a friend, just press the button below!</Text>
-      <Button text='Pick a photo!' onPress={openImagePickerAsync} />
-    </View>
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <HomeScreen />
+      </ApplicationProvider>
+    </>
   );
-}
+};
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  logo: {
-    width: 305,
-    height: 159,
-    marginBottom: 10,
-  },
-  instructions: {
-    color: '#888',
-    fontSize: 18,
-    marginHorizontal: 15,
-  },
-  button: {
-    backgroundColor: 'blue',
-    padding: 20,
-    borderRadius: 5,
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#fff',
-  },
-  thumbnail: {
-    width: 300,
-    height: 300,
-    resizeMode: "contain",
   },
 });
