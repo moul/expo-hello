@@ -19,12 +19,16 @@ export default function App() {
     if (pickerResult.cancelled === true) {
       return ;
     }
-    if (Platform.OS === 'web' || true) {
+    if (Platform.OS === 'web') {
       let remoteUri = await uploadToAnonymousFilesAsync(pickerResult.uri);
       setSelectedImage({ localUri: pickerResult.uri, remoteUri: remoteUri });
     } else {
       setSelectedImage({ localUri: pickerResult.uri, remoteUri: null });
     }
+  };
+
+  let clearImage = async() => {
+    setSelectedImage(null);
   };
 
   let openShareDialogAsync = async () => {
@@ -44,6 +48,9 @@ export default function App() {
         />
         <TouchableOpacity style={styles.button} onPress={openShareDialogAsync}>
           <Text style={styles.buttonText}>Share this photo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={clearImage}>
+          <Text style={styles.buttonText}>Clear</Text>
         </TouchableOpacity>
       </View>
     )
