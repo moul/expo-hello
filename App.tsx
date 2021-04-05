@@ -39,6 +39,14 @@ export default function App() {
     await Sharing.shareAsync(selectedImage.localUri);
   };
 
+  let Button = (props) => {
+    return (
+      <TouchableOpacity style={styles.button} onPress={props.onPress}>
+        <Text style={styles.buttonText}>{props.text}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   if (selectedImage !== null) {
     return (
       <View style={styles.container}>
@@ -46,12 +54,8 @@ export default function App() {
           source={{ uri: selectedImage.localUri }}
           style={styles.thumbnail}
         />
-        <TouchableOpacity style={styles.button} onPress={openShareDialogAsync}>
-          <Text style={styles.buttonText}>Share this photo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={clearImage}>
-          <Text style={styles.buttonText}>Clear</Text>
-        </TouchableOpacity>
+        <Button text='Share this photo' onPress={openShareDialogAsync} />
+        <Button text='Clear' onPress={clearImage} />
       </View>
     )
   }
@@ -60,9 +64,7 @@ export default function App() {
     <View style={styles.container}>
       <Image source={logo} style={styles.logo} />
       <Text style={styles.instructions}>To share a photo from your phone with a friend, just press the button below!</Text>
-      <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
-        <Text style={styles.buttonText}>Pick a photo</Text>
-      </TouchableOpacity>
+      <Button text='Pick a photo!' onPress={openImagePickerAsync} />
     </View>
   );
 }
@@ -97,5 +99,5 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     resizeMode: "contain",
-  }
+  },
 });
